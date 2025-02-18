@@ -87,10 +87,10 @@ const FormWithLocalSave: React.FC = () => {
         onChangeText={(value) => handleInputChange('age', value)}
       />
 
-      <Button title="Save Data" onPress={saveDataLocally} />
-      <View style={{ marginTop: 10 }}>
+      <Button title="Save/Update Data" onPress={saveDataLocally} />
+      {/* <View style={{ marginTop: 10 }}>
         <Button title="Get Saved Data" onPress={getData} />
-      </View>
+      </View> */}
     </View>
   );
 };

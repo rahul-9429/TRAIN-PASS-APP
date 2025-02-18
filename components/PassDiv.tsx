@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { View, Image, Text, StyleSheet, Alert } from 'react-native';
+import { View, Image, Text, StyleSheet, Alert, Button, TouchableOpacity, Modal, ScrollView } from 'react-native';
 import ButtonMain from './ui/ButtonMain';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-// import react_logo from '../assets/images/react-logo.png';
+import FormWithLocalSave from './FormWithLocalSave';
+import MarqueeWithoutLibrary from '../components/ScrollText';
 
 interface SaveDataIp {
   name: string;
@@ -12,6 +13,12 @@ interface SaveDataIp {
 
 const PassDiv = () => {
   const [savedData, setSavedData] = useState<SaveDataIp | null>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  const toggleModal = () => {
+    setIsVisible(!isVisible);
+  };
+
   const addDays = (days: number) => {
     const date = new Date();
     date.setDate(date.getDate() + days); 
@@ -23,7 +30,7 @@ const PassDiv = () => {
     date.setDate(date.getDate() - days); 
     return date.toLocaleDateString();
   };
-  
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -44,199 +51,300 @@ const PassDiv = () => {
 
   return (
     <>
-    <View style={{
-        width:'100%',    
+      <View style={{
+        width: '100%',    
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        alignContent: 'center',
-        // marginRight: 20,
-       
-    }}>
-    <Image 
-        source={require('../assets/images/left.png')} 
-        style={{
+      }}>
+        <Image 
+          source={require('../assets/images/left.png')} 
+          style={{
             width: 50,
             height: 20,
             marginLeft: 10,
-
-        }} 
-      />
-      <Image 
-        source={require('../assets/images/railway.png')} 
+          }} 
+        />
+        <View 
         style={{
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'center',
+          alignItems: 'center',
+          zIndex: 1,
+        }}
+        >
+       <MarqueeWithoutLibrary />
+        </View>
+        <Image 
+          source={require('../assets/images/railway.png')} 
+          style={{
             width: 40,
             height: 40,
             marginRight: 10
-        }} 
-      />
+          }} 
+        />
+      </View>
+
+      <View style={styles.container}>
+        <View style={{ backgroundColor: '#82dcdc', width: '100%', padding: 10, paddingHorizontal: 20,  }}>
+          <View style={styles.row}>
+            <Text style={{ textAlign: 'center', color: 'black', fontSize: 18, fontWeight: 'bold', justifyContent: 'space-around', display: 'flex' }}>HAPPY JOURNEY</Text>
+            <Text style={{
+              backgroundColor: '#5b2d77',
+              padding: 6,
+              width: '50%',
+              color:'white',
+              fontWeight: 'bold',
+              fontSize: 16,
+              textAlign: 'center',
+            }}>MONTHLY</Text>
+          </View>
+          <View style={styles.hr}></View>
+          <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+            <Text style={{ left: '30%', fontSize: 18, fontWeight: 'bold' }}>ADULT SEASON</Text>
+            <Text style={{ textAlign: 'right', fontSize: 18, fontWeight: 'bold' }}>{subtractDays(10)}</Text>
+          </View>
+          <View style={styles.subRow}>
+            <Text style={{ fontSize: 18 }}>₹185.00/-</Text>
+            <Text style={{ fontSize: 18, marginLeft: 10 }}>{savedData?.phone || 'Add your data'}</Text>
+          </View>
+
+          <View style={styles.subRow}>
+            <Text style={{ fontSize: 18 }}>UTS No: XWEDE0100A</Text>
+            <Text style={{ color: 'red', fontSize: 18, marginLeft: 10 }}>MONTHLY</Text>
+          </View>
+
+          <View>
+            <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+              <Text style={{ fontSize: 18 }}>Id card Number:</Text>
+              <Text style={{ color: 'red', fontSize: 18, marginLeft: 10 }}>372316989812</Text>
+            </View>
+            <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+              <Text style={{ fontSize: 18 }}>Pass:</Text>
+              <Text style={{ color: 'red', fontSize: 18 }}>Mr{' '}{savedData?.name || 'Add your data'}</Text>
+            </View>
+          </View>
+
+          <View style={styles.subRow}>
+            <Text style={{ fontSize: 18 }}>
+              Age:
+              <Text style={{ color: 'red', fontSize: 18, marginLeft: 5 }}>{savedData?.age || 'Add your data'}</Text>
+            </Text>
+            <Text style={{ color: 'red', fontSize: 18, marginLeft: 10 }}>Between</Text>
+          </View>
+
+          <View style={styles.hr}></View>
+
+          <View style={{ display: 'flex', flexDirection: 'row', gap: 10, alignItems: 'center' }}>
+            <View style={{ backgroundColor: '#5b2d77', width: 25, height: 25, display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '50%' }}>
+              <Text style={{ color: 'white', fontWeight: 'bold' }}>S</Text>
+            </View>
+            <View>
+              <Text style={{ fontSize: 17 }}>यलमंचिली</Text>
+              <Text style={{ fontSize: 18 }}>ELAMANCHILI</Text>
+              <Text style={{ fontSize: 17 }}>యలమంచిలి</Text>
+            </View>
+          </View>
+
+          <View style={{ display: 'flex', flexDirection: 'row', gap: 10, marginTop: 10, alignItems: 'center' }}>
+            <View style={{ backgroundColor: '#5b2d77', width: 25, height: 25, display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '50%' }}>
+              <Text style={{ color: 'white', fontWeight: 'bold' }}>D</Text>
+            </View>
+            <View>
+              <Text style={{ fontSize: 17 }}>द्वितीय</Text>
+              <Text style={{ fontSize: 18 }}>DUVVADA</Text>
+              <Text style={{ fontSize: 17 }}>दुव्वाड़ा</Text>
+            </View>
+          </View>
+
+              <View
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+              }}
+              >
+         {/* CLASS and TRAIN TYPE Sections */}
+<View style={{ display: 'flex', flexDirection: 'row', marginTop: 10 }}>
+  <View
+    style={{
+      width: '50%',
+      display: 'flex',
+      flexDirection: 'row',
+      alignItems: 'center',
+
+    }}
+  >
+    <View>
+      <Text>CLASS:</Text>
     </View>
-    
-    <View style={styles.container}>
-      <View style={{ backgroundColor: '#82dcdc', width: '100%', padding: 10, paddingHorizontal: 20, borderTopEndRadius: 10, borderTopStartRadius: 10 }}>
-        <View style={styles.row}>
-          <Text style={{ textAlign: 'center', color: 'black', fontSize: 18, fontWeight: 'bold', justifyContent:'space-around', display:'flex' }}>HAPPY JOURNEY</Text>
-          <Text style={styles.badge}>MONTHLY</Text>
-        </View>
-        <View style={styles.hr}></View>
-        <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
-          <Text style={{ left: '30%', fontSize: 18, fontWeight: 'bold' }}>ADULT SEASON</Text>
-          <Text style={{ textAlign: 'right', fontSize: 18, fontWeight: 'bold' }}>17/02/2025</Text>
-        </View>
-        <View style={styles.subRow}>
-          <Text style={{ fontSize: 18 }}>₹186.00/-</Text>
-          <Text style={{ fontSize: 18, marginLeft: 10 }}>{savedData?.phone || 'Add your data'}</Text>
-        </View>
-
-        <View style={styles.subRow}>
-          <Text style={{ fontSize: 18 }}>UTS No: XWEDE0100A</Text>
-          <Text style={{ color: 'red', fontSize: 18, marginLeft: 10 }}>MONTHLY</Text>
-        </View>
-
-        <View>
-          <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-            <Text style={{ fontSize: 18 }}>Id card Number:</Text>
-            <Text style={{ color: 'red', fontSize: 18, marginLeft: 10 }}>372316989812</Text>
-          </View>
-          <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-            <Text style={{ fontSize: 18 }}>Pass:</Text>
-            <Text style={{ color: 'red', fontSize: 18,}}>Mr{' '}{savedData?.name || 'Add your data'}</Text>
-          </View>
-        </View>
-
-        <View style={styles.subRow}>
-          <Text style={{ fontSize: 18 }}>
-            Age:
-            <Text style={{ color: 'red', fontSize: 18, marginLeft: 5 }}>{savedData?.age || 'Add your data'}</Text>
-          </Text>
-          <Text style={{ color: 'red', fontSize: 18, marginLeft: 10 }}>Between</Text>
-        </View>
-
-        <View style={styles.hr}></View>
-
-        <View style={{ display: 'flex', flexDirection: 'row', gap: 10, alignItems: 'center' }}>
-          <View style={{ backgroundColor: '#5b2d77', width: 25, height: 25, display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '50%' }}>
-            <Text style={{ color: 'white', fontWeight: 'bold' }}>S</Text>
-          </View>
-          <View>
-            <Text style={{ fontSize: 17 }}>यलमंचिली</Text>
-            <Text style={{ fontSize: 18 }}>YALAMANCHILI</Text>
-            <Text style={{ fontSize: 17 }}>యలమంచిలి</Text>
-          </View>
-        </View>
-
-        <View style={{ display: 'flex', flexDirection: 'row', gap: 10, marginTop: 10, alignItems: 'center' }}>
-          <View style={{ backgroundColor: '#5b2d77', width: 25, height: 25, display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '50%' }}>
-            <Text style={{ color: 'white', fontWeight: 'bold' }}>D</Text>
-          </View>
-          <View>
-            <Text style={{ fontSize: 17 }}>द्वितीय</Text>
-            <Text style={{ fontSize: 18 }}>DUVVADA</Text>
-            <Text style={{ fontSize: 17 }}>दुव्वाड़ा</Text>
-          </View>
-        </View>
-        <View  style={{ display: 'flex', flexDirection: 'row', gap: 10, marginTop: 10, alignItems: 'center' }}>
-
-        <View style={{ display: 'flex', flexDirection: 'row', marginTop: 10 }}>
-          <View style={{ width: 'auto', display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-            <View>
-              <Text>CLASS:</Text>
-            </View>
-            <View>
-              <Text style={{ color: 'red', fontSize: 15 }}>द्वितीय</Text>
-              <Text style={{ color: 'red', fontSize: 15 }}>SECOND</Text>
-              <Text style={{ color: 'red', fontSize: 15 }}>ద్వితీయ శ్రేణి</Text>
-            </View>
-          </View>
-        </View>
-
-        <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-          <View>
-            <Text>TRAIN TYPE:</Text>
-          </View>
-          <View>
-            <Text style={{ color: 'red', fontSize: 15 }}>मेल/एक्सप्रेस</Text>
-            <Text style={{ color: 'red', fontSize: 15 }}>MAIL / EXP</Text>
-            <Text style={{ color: 'red', fontSize: 15 }}>మెయిల్/ఎక్స్‌ప్రెస్</Text>
-          </View>
-        </View>
+    <View>
+      <Text style={{ color: 'red', fontWeight:'bold' ,fontSize: 15 }}>द्वितीय</Text>
+      <Text style={{ color: 'red', fontWeight:'bold', fontSize: 15 }}>SECOND</Text>
+      <Text style={{ color: 'red', fontWeight:'bold', fontSize: 15 }}>ద్వితీయ శ్రేణి</Text>
+    </View>
+  </View>
+  <View
+    style={{
+      width: 'auto',
+      display: 'flex',
+      flexDirection: 'row',
+      alignItems: 'center',
+    }}
+  >
+    <View>
+      <Text>TRAIN TYPE:</Text>
+    </View>
+    <View>
+      <Text style={{ color: 'red', fontWeight:'bold', fontSize: 15 }}>मेल/एक्सप्रेस</Text>
+      <Text style={{ color: 'red', fontWeight:'bold', fontSize: 15 }}>MAIL / EXP</Text>
+      <Text style={{ color: 'red', fontWeight:'bold', fontSize: 15 }}>మెయిల్/ఎక్స్‌ప్రెస్</Text>
+    </View>
+  </View>
 </View>
-        <View style={styles.hr}></View>
-        <View style={{ display: 'flex', flexDirection: 'row', gap: 10 }}>
-          <Text style={{ fontSize: 18 }}>SAC:993277</Text>
-          <Text style={{ fontSize: 18 }}>IR: 37AAAGM0768G1Y7</Text>
+
+
+
+{/* <View style={{ display: 'flex', flexDirection: 'row' }}>
+  <View>
+    <Text>TRAIN TYPE:</Text>
+  </View>
+  <View>
+    <Text style={{ color: 'red', fontSize: 15 }}>मेल/एक्सप्रेस</Text>
+    <Text style={{ color: 'red', fontSize: 15 }}>MAIL / EXP</Text>
+    <Text style={{ color: 'red', fontSize: 15 }}>మెయిల్/ఎక్స్‌ప్రెస్</Text>
+  </View>
+</View> */}
+
+              </View>
+
+          {/* Additional content of PassDiv here */}
+          <View style={styles.hr}></View>
+          <View style={{ display: 'flex', flexDirection: 'row', gap: 10 }}>
+            <Text style={{ fontSize: 18 }}>SAC:993277</Text>
+            <Text style={{ fontSize: 18 }}>IR: 37AAAGM0768G1Y7</Text>
+          </View>
+
+          <View style={{
+            height:1,
+            width:'100%',
+            backgroundColor:'black',
+          }}></View>
+
+          <View>
+            <Text style={{ textAlign: 'center', fontSize: 17, width: '100%', }}>
+              Validity: FROM <Text style={{ color: 'red',fontWeight:'bold' }}>{subtractDays(10)}</Text> TO <Text style={{ color: 'red',fontWeight:'bold' }} >{addDays(20)}</Text>
+            </Text>
+          </View>
+
+          <View style={{ display: 'flex', flexDirection: 'row' }}>
+            <Text style={{ width: '60%', fontWeight: 'bold', fontSize: 16 }}>R29442</Text>
+            <Text>Distance: 39 km</Text>
+          </View>
+          <Text style={{ fontSize: 19 }}>BOOKING TIME : {subtractDays(10)} 09:11</Text>
         </View>
 
-        <View style={styles.subRow}></View>
-
-        <View>
-          <Text style={{ textAlign: 'center', fontSize: 17, width: '100%' }}>
-            Validity: FROM <Text style={{color:'red'}}>{}</Text> TO <Text style={{color:'red'}} >{addDays(29)}</Text>
+        <View style={{ backgroundColor: 'white', width: '100%', padding: 10, paddingHorizontal: 20, borderBottomEndRadius: 10, borderBottomStartRadius: 10 }}>
+          <Text style={{ color: 'skyblue' }}>
+            It is recommended not to perform factory reset or change your handset whenever you are having a valid ticket on the mobile.
+            <Text style={{ color: 'orange', textDecorationLine: 'underline' }}>
+              Click for Changing Handset with Valid Ticket
+            </Text>
+          </Text>
+          <Text style={{ textAlign: 'center', color: 'red', fontSize: 13 }}>
+            FOR MEDICAL EMERGENCY / FIRST AID, CONTACT TICKET CHECKING STAFF / GUARD OR DIAL 139
+          </Text>
+          <View style={{ gap: 6 }}>
+            <ButtonMain name="OPEN QR CODE" />
+            <View style={{ backgroundColor: '#f76b1c', width: '100%', padding: 10, display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: 40 }}>
+              <TouchableOpacity onPress={toggleModal} style={{ padding: 0 }}>
+                <Text style={{ color: 'black', fontWeight: 'bold', fontSize: 15 }}>NEXT TRAINS TO DUVVADA</Text>
+              </TouchableOpacity>
+            </View>
+            <ButtonMain name="OK" />
+          </View>
+          <Text
+          style={{
+            textAlign: 'center',
+            color: 'black',
+            fontSize: 15,
+            // fontWeight: 'bold',
+            marginTop: 10,
+          }}
+          >
+            Center for Railway Information Systems (CRIS)
           </Text>
         </View>
-
-        <View style={{ display: 'flex', flexDirection: 'row' }}>
-          <Text style={{ width: '60%', fontWeight: 'bold', fontSize: 18 }}>R29442</Text>
-          <Text>Distance: 39 km</Text>
-        </View>
-        <Text style={{ fontSize: 19 }}>BOOKING TIME : 17/02/2025 10:09</Text>
       </View>
 
-      <View style={{ backgroundColor: 'white', width: '100%', padding: 10, paddingHorizontal: 20, borderBottomEndRadius: 10, borderBottomStartRadius: 10 }}>
-        <Text style={{ color: 'skyblue' }}>
-          It is recommended not to perform factory reset or change your handset whenever you are having a valid ticket on the mobile.
-          <Text style={{ color: 'orange', textDecorationLine: 'underline' }}>Click for Changing Handset with Valid Ticket</Text>
-
-        </Text>
-        <Text style={{ textAlign: 'center', color: 'red' }}>
-          FOR MEDICAL EMERGENCY / FIRST AID, CONTACT TICKET CHECKING STAFF / GUARD OR DIAL 139
-        </Text>
-        <View style={{ gap: 10 }}>
-          <ButtonMain name="OPEN QR CODE" />
-          <ButtonMain name="NEXT TRAINS TO DUVVADA" />
-          <ButtonMain name="OK" />
+      {/* Modal for FormWithLocalSave */}
+      <Modal visible={isVisible} animationType="slide" transparent={true} onRequestClose={toggleModal}>
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContainer}>
+            <ScrollView contentContainerStyle={styles.scrollViewContainer}>
+              <FormWithLocalSave />
+            </ScrollView>
+            <TouchableOpacity onPress={toggleModal} style={styles.closeButton}>
+              <Text style={{ color: 'white', fontWeight: 'bold' }}>Close</Text>
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
-    </View>
+      </Modal>
     </>
-
   );
 };
 
 const styles = StyleSheet.create({
-  hr: {
-    borderBottomColor: 'black',
-    borderBottomWidth: 2,
-    marginVertical: 10,
-    width: '95%',
-  },
-  subRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+  modalOverlay: {
+    flex: 1,
+    justifyContent: 'center',
     alignItems: 'center',
-    display: 'flex',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalContainer: {
+    width: '90%', // Adjust width to fit most screens
+    maxWidth: 400, // Add a max width to avoid very large modals on big screens
+    backgroundColor: 'white',
+    borderRadius: 10,
+    padding: 20,
+  },
+  scrollViewContainer: {
+    paddingBottom: 20, // Ensure there's space at the bottom for form elements
+  },
+  closeButton: {
+    backgroundColor: 'red',
+    padding: 10,
+    borderRadius: 5,
+    marginTop: 20,
+    alignItems: 'center',
   },
   container: {
-    boxShadow: '0 0 20px rgba(0, 0, 0, 0.4)',
     width: '90%',
-    alignSelf: 'center',
-    marginTop: 10,
-    borderRadius: 8,
-    flexDirection: 'column',
   },
   row: {
+    display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
+
   },
   badge: {
-    backgroundColor: '#5b2d77',
-    color: 'white',
-    width: '50%',
+    backgroundColor: 'red',
+    borderRadius: 30,
     fontSize: 18,
-    paddingVertical: 10,
-    textAlign: 'center',
+    color: 'white',
+    padding: 5,
+    marginRight: 5,
+  },
+  hr: {
+    borderBottomWidth: 2,
+    marginVertical: 3,
+    borderColor: 'black',
+  },
+  subRow: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
 });
 

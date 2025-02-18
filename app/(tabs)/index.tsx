@@ -4,15 +4,15 @@ import PassDiv from '@/components/PassDiv';
 import FormWithLocalSave from '../../components/FormWithLocalSave';
 export default function HomeScreen() {
   return (
-    <SafeAreaView style={{ backgroundColor: 'white',
+    <SafeAreaView style={{ backgroundColor: '#f76b1c',
       width: '100%',
       height: '100%',
       alignItems: 'center',
       overflowY:'scroll',
     }}>
       {/* <FormWithLocalSave />  */}
-      <PassDiv />
-        {/* <ThemedText></ThemedText> */}
+      {/* <PassDiv /> */}
+       
     </SafeAreaView>
   );
 }

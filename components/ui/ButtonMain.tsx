@@ -8,7 +8,7 @@ const ButtonMain : React.FC<ButtonProps> = ({name}) => {
   return (
     <View
     style={{
-    backgroundColor: 'darkorange',
+    backgroundColor: '#f76b1c',
         width:'100%',
         padding:10,
         display:'flex',
