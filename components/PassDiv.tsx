@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { View, Image, Text, StyleSheet, Alert, Button, TouchableOpacity, Modal, ScrollView } from 'react-native';
+import { View, Image, Text, StyleSheet, Alert, Button, StatusBar, TouchableOpacity, Modal, ScrollView } from 'react-native';
 import ButtonMain from './ui/ButtonMain';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import FormWithLocalSave from './FormWithLocalSave';
-import MarqueeWithoutLibrary from '../components/ScrollText';
+import FormWithLocalSave from './FormWithLocalSave'; 
 
 interface SaveDataIp {
   name: string;
@@ -14,17 +13,16 @@ interface SaveDataIp {
 const PassDiv = () => {
   const [savedData, setSavedData] = useState<SaveDataIp | null>(null);
   const [isVisible, setIsVisible] = useState(false);
-
   const toggleModal = () => {
     setIsVisible(!isVisible);
-  };
-
+  }
   const addDays = (days: number) => {
     const date = new Date();
     date.setDate(date.getDate() + days); 
     return date.toLocaleDateString();
   };
 
+  
   const subtractDays = (days: number) => {
     const date = new Date();
     date.setDate(date.getDate() - days); 
@@ -32,6 +30,8 @@ const PassDiv = () => {
   };
 
   useEffect(() => {
+  StatusBar.setBackgroundColor('darkorange');
+
     const fetchData = async () => {
       try {
         const data = await AsyncStorage.getItem('userData');
@@ -51,13 +51,23 @@ const PassDiv = () => {
 
   return (
     <>
+     <StatusBar
+        backgroundColor="darkorange">
+     </StatusBar>
+      
+      <View style={{
+        flex: 1,
+}}>
+
       <View style={{
         width: '100%',    
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-      }}>
+     
+      
+}}>
         <Image 
           source={require('../assets/images/left.png')} 
           style={{
@@ -66,17 +76,16 @@ const PassDiv = () => {
             marginLeft: 10,
           }} 
         />
-        <View 
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'center',
-          alignItems: 'center',
-          zIndex: 1,
-        }}
-        >
-       <MarqueeWithoutLibrary />
-        </View>
+       <Text
+       style={{
+        fontSize: 20,
+        color: 'black',
+        fontWeight: 'bold',
+        // fontColor: 'black',
+       }}
+       >
+        IR Unserved Ticket
+       </Text>
         <Image 
           source={require('../assets/images/railway.png')} 
           style={{
@@ -169,7 +178,7 @@ const PassDiv = () => {
 <View style={{ display: 'flex', flexDirection: 'row', marginTop: 10 }}>
   <View
     style={{
-      width: '50%',
+      width: '45%',
       display: 'flex',
       flexDirection: 'row',
       alignItems: 'center',
@@ -264,7 +273,10 @@ const PassDiv = () => {
             </View>
             <ButtonMain name="OK" />
           </View>
-          <Text
+          
+        </View>
+      </View>
+      <Text
           style={{
             textAlign: 'center',
             color: 'black',
@@ -275,9 +287,8 @@ const PassDiv = () => {
           >
             Center for Railway Information Systems (CRIS)
           </Text>
-        </View>
-      </View>
-
+    </View>
+     
       {/* Modal for FormWithLocalSave */}
       <Modal visible={isVisible} animationType="slide" transparent={true} onRequestClose={toggleModal}>
         <View style={styles.modalOverlay}>
@@ -321,6 +332,13 @@ const styles = StyleSheet.create({
   },
   container: {
     width: '90%',
+    marginLeft:20,
+    marginTop:10,
+    // borderColor: 'black',
+    // borderWidth: 1,
+    boxShadow: '0 0 10px rgba(0, 0, 0, 0.7)',
+    borderBottomEndRadius: 10,
+    borderBottomStartRadius: 10,
   },
   row: {
     display: 'flex',

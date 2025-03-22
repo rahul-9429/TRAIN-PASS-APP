@@ -9,9 +9,8 @@ export default function HomeScreen() {
       height: '100%',
       alignItems: 'center',
       overflowY:'scroll',
+      flex: 1,
     }}>
-      {/* <FormWithLocalSave />  */}
-      {/* <PassDiv /> */}
        
     </SafeAreaView>
   );
