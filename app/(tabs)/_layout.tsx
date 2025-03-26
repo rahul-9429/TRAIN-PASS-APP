@@ -1,5 +1,5 @@
 import React from 'react';
-import PassDiv from '@/components/PassDiv';
+import PassDiv from '../../components/PassDiv';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ScrollView, StatusBar, View } from 'react-native';
 

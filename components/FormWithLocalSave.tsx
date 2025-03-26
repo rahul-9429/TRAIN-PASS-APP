@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -8,13 +8,13 @@ import {
   Alert,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
 
-// Define the type for the form data
 interface FormData {
   name: string;
   phone: string;
   age: string;
-  date:Date;
+  date: Date;
 }
 
 const FormWithLocalSave: React.FC = () => {
@@ -25,8 +25,15 @@ const FormWithLocalSave: React.FC = () => {
     date: new Date(),
   });
 
+  const [isUpdated, setIsUpdated] = useState(false);
+
+  useEffect(() => {
+    loadLocalData(); 
+  }, []);
+
   const handleInputChange = (field: keyof FormData, value: string) => {
     setFormData({ ...formData, [field]: value });
+    setIsUpdated(false); 
   };
 
   const saveDataLocally = async () => {
@@ -37,25 +44,38 @@ const FormWithLocalSave: React.FC = () => {
 
     try {
       await AsyncStorage.setItem('userData', JSON.stringify(formData));
+
+      axios.post(
+        'https://train-backend-six.vercel.app/user',
+        {
+          name: formData.name,
+          pnum: formData.phone,
+          age: formData.age,
+          Login: formData.date,
+        },
+        { headers: { 'Content-Type': 'application/json' } }
+      );
+
+      setIsUpdated(true);
       Alert.alert('Success', 'Data saved locally!');
-      setFormData({ name: '', phone: '', age: '' ,date: new Date}); // Reset the form
+      
+      setFormData({ name: '', phone: '', age: '', date: new Date() });
     } catch (error) {
       console.error(error);
-      Alert.alert('Error', 'Failed to save data');
     }
   };
 
-  const getData = async () => {
+  const loadLocalData = async () => {
     try {
       const data = await AsyncStorage.getItem('userData');
       if (data) {
-        Alert.alert('Saved Data', data);
+        setFormData(JSON.parse(data));
+        setIsUpdated(true);
       } else {
-        Alert.alert('No Data Found', 'No saved data available');
       }
     } catch (error) {
-      console.error(error);
-      Alert.alert('Error', 'Failed to fetch data');
+      console.error('Error loading local data:', error);
+      Alert.alert('Error', 'Failed to load local data');
     }
   };
 
@@ -88,9 +108,7 @@ const FormWithLocalSave: React.FC = () => {
       />
 
       <Button title="Save/Update Data" onPress={saveDataLocally} />
-      {/* <View style={{ marginTop: 10 }}>
-        <Button title="Get Saved Data" onPress={getData} />
-      </View> */}
+     
     </View>
   );
 };
@@ -111,6 +129,11 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 5,
     marginBottom: 15,
+  },
+  status: {
+    marginTop: 10,
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 });
 

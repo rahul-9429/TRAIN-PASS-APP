@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "simpleproject",
+    "name": "UTS",
     "slug": "simpleproject",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/utsUpdated.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -28,7 +28,7 @@
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/splash-icon.png",
+          "image": "./assets/images/utsUpdated.png",
           "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
@@ -45,6 +45,7 @@
       "eas": {
         "projectId": "a884e6be-d1da-4466-9bd3-d70995dfeb6a"
       }
-    }
+    },
+    "owner": "rahul_9429"
   }
 }

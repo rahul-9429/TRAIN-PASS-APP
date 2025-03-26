@@ -3,6 +3,7 @@ import { View, Image, Text, StyleSheet, Alert, Button, StatusBar, TouchableOpaci
 import ButtonMain from './ui/ButtonMain';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import FormWithLocalSave from './FormWithLocalSave'; 
+import { usePreventScreenCapture } from "expo-screen-capture";
 
 interface SaveDataIp {
   name: string;
@@ -11,8 +12,9 @@ interface SaveDataIp {
 }
 
 const PassDiv = () => {
+  usePreventScreenCapture(); 
   const [savedData, setSavedData] = useState<SaveDataIp | null>(null);
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);  
   const toggleModal = () => {
     setIsVisible(!isVisible);
   }
@@ -99,14 +101,20 @@ const PassDiv = () => {
       <View style={styles.container}>
         <View style={{ backgroundColor: '#82dcdc', width: '100%', padding: 10, paddingHorizontal: 20,  }}>
           <View style={styles.row}>
-            <Text style={{ textAlign: 'center', color: 'black', fontSize: 18, fontWeight: 'bold', justifyContent: 'space-around', display: 'flex' }}>HAPPY JOURNEY</Text>
+            <Text style={{
+              padding: 6,
+              width: '50%',
+              color:'black',
+              fontWeight: 'bold',
+              fontSize:18,
+              textAlign: 'center', }}>HAPPY JOURNEY</Text> 
             <Text style={{
               backgroundColor: '#5b2d77',
               padding: 6,
               width: '50%',
               color:'white',
               fontWeight: 'bold',
-              fontSize: 16,
+              fontSize:18,
               textAlign: 'center',
             }}>MONTHLY</Text>
           </View>
@@ -116,30 +124,30 @@ const PassDiv = () => {
             <Text style={{ textAlign: 'right', fontSize: 18, fontWeight: 'bold' }}>{subtractDays(10)}</Text>
           </View>
           <View style={styles.subRow}>
-            <Text style={{ fontSize: 18 }}>₹185.00/-</Text>
-            <Text style={{ fontSize: 18, marginLeft: 10 }}>{savedData?.phone || 'Add your data'}</Text>
+            <Text style={{ fontSize: 17 }}>₹185.00/-</Text>
+            <Text style={{ fontSize: 17, marginLeft: 10 }}>{savedData?.phone || 'Add your data'}</Text>
           </View>
 
           <View style={styles.subRow}>
-            <Text style={{ fontSize: 18 }}>UTS No: XWEDE0100A</Text>
-            <Text style={{ color: 'red', fontSize: 18, marginLeft: 10 }}>MONTHLY</Text>
+            <Text style={{ fontSize: 16 }}>UTS No: XWEDE0100A</Text>
+            <Text style={{ color: 'red', fontSize: 16, marginLeft: 10 }}>MONTHLY</Text>
           </View>
 
           <View>
             <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-              <Text style={{ fontSize: 18 }}>Id card Number:</Text>
-              <Text style={{ color: 'red', fontSize: 18, marginLeft: 10 }}>372316989812</Text>
+              <Text style={{ fontSize: 16 }}>Id card Number:</Text>
+              <Text style={{ color: 'red', fontSize: 16, marginLeft: 10,fontWeight:"bold" }}>372316989812</Text>
             </View>
             <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-              <Text style={{ fontSize: 18 }}>Pass:</Text>
-              <Text style={{ color: 'red', fontSize: 18 }}>Mr{' '}{savedData?.name || 'Add your data'}</Text>
+              <Text style={{ fontSize: 16 }}>Pass:</Text>
+              <Text style={{ color: 'red', fontSize: 18, fontWeight:"bold" }}>Mr{' '}{savedData?.name || 'Add your data'}</Text>
             </View>
           </View>
 
           <View style={styles.subRow}>
-            <Text style={{ fontSize: 18 }}>
+            <Text style={{ fontSize: 16 }}>
               Age:
-              <Text style={{ color: 'red', fontSize: 18, marginLeft: 5 }}>{savedData?.age || 'Add your data'}</Text>
+              <Text style={{ color: 'red', fontSize: 16, marginLeft: 5,fontWeight:"bold" }}>{savedData?.age || 'Add your data'}</Text>
             </Text>
             <Text style={{ color: 'red', fontSize: 18, marginLeft: 10 }}>Between</Text>
           </View>
@@ -189,9 +197,9 @@ const PassDiv = () => {
       <Text>CLASS:</Text>
     </View>
     <View>
-      <Text style={{ color: 'red', fontWeight:'bold' ,fontSize: 15 }}>द्वितीय</Text>
-      <Text style={{ color: 'red', fontWeight:'bold', fontSize: 15 }}>SECOND</Text>
-      <Text style={{ color: 'red', fontWeight:'bold', fontSize: 15 }}>ద్వితీయ శ్రేణి</Text>
+      <Text style={{ color: 'red', fontWeight:'bold' ,fontSize:16 }}>द्वितीय</Text>
+      <Text style={{ color: 'red', fontWeight:'bold', fontSize:16 }}>SECOND</Text>
+      <Text style={{ color: 'red', fontWeight:'bold', fontSize:16 }}>ద్వితీయ శ్రేణి</Text>
     </View>
   </View>
   <View
@@ -206,26 +214,12 @@ const PassDiv = () => {
       <Text>TRAIN TYPE:</Text>
     </View>
     <View>
-      <Text style={{ color: 'red', fontWeight:'bold', fontSize: 15 }}>मेल/एक्सप्रेस</Text>
-      <Text style={{ color: 'red', fontWeight:'bold', fontSize: 15 }}>MAIL / EXP</Text>
-      <Text style={{ color: 'red', fontWeight:'bold', fontSize: 15 }}>మెయిల్/ఎక్స్‌ప్రెస్</Text>
+      <Text style={{ color: 'red', fontWeight:'bold', fontSize:16 }}>मेल/एक्सप्रेस</Text>
+      <Text style={{ color: 'red', fontWeight:'bold', fontSize:16 }}>MAIL / EXP</Text>
+      <Text style={{ color: 'red', fontWeight:'bold', fontSize:16 }}>మెయిల్/ఎక్స్‌ప్రెస్</Text>
     </View>
   </View>
 </View>
-
-
-
-{/* <View style={{ display: 'flex', flexDirection: 'row' }}>
-  <View>
-    <Text>TRAIN TYPE:</Text>
-  </View>
-  <View>
-    <Text style={{ color: 'red', fontSize: 15 }}>मेल/एक्सप्रेस</Text>
-    <Text style={{ color: 'red', fontSize: 15 }}>MAIL / EXP</Text>
-    <Text style={{ color: 'red', fontSize: 15 }}>మెయిల్/ఎక్స్‌ప్రెస్</Text>
-  </View>
-</View> */}
-
               </View>
 
           {/* Additional content of PassDiv here */}
@@ -242,7 +236,7 @@ const PassDiv = () => {
           }}></View>
 
           <View>
-            <Text style={{ textAlign: 'center', fontSize: 17, width: '100%', }}>
+            <Text style={{  fontSize: 17, width: '100%', }}>
               Validity: FROM <Text style={{ color: 'red',fontWeight:'bold' }}>{subtractDays(10)}</Text> TO <Text style={{ color: 'red',fontWeight:'bold' }} >{addDays(20)}</Text>
             </Text>
           </View>
@@ -251,7 +245,7 @@ const PassDiv = () => {
             <Text style={{ width: '60%', fontWeight: 'bold', fontSize: 16 }}>R29442</Text>
             <Text>Distance: 39 km</Text>
           </View>
-          <Text style={{ fontSize: 19 }}>BOOKING TIME : {subtractDays(10)} 09:11</Text>
+          <Text style={{ fontSize: 18 }}>BOOKING TIME : {subtractDays(10)} 09:11 AM</Text>
         </View>
 
         <View style={{ backgroundColor: 'white', width: '100%', padding: 10, paddingHorizontal: 20, borderBottomEndRadius: 10, borderBottomStartRadius: 10 }}>
@@ -268,7 +262,7 @@ const PassDiv = () => {
             <ButtonMain name="OPEN QR CODE" />
             <View style={{ backgroundColor: '#f76b1c', width: '100%', padding: 10, display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: 40 }}>
               <TouchableOpacity onPress={toggleModal} style={{ padding: 0 }}>
-                <Text style={{ color: 'black', fontWeight: 'bold', fontSize: 15 }}>NEXT TRAINS TO DUVVADA</Text>
+                <Text style={{ color: 'black', fontWeight: 'bold', fontSize:14 }}>NEXT TRAINS TO DUVVADA</Text>
               </TouchableOpacity>
             </View>
             <ButtonMain name="OK" />
@@ -280,9 +274,9 @@ const PassDiv = () => {
           style={{
             textAlign: 'center',
             color: 'black',
-            fontSize: 15,
+            fontSize:14,
             // fontWeight: 'bold',
-            marginTop: 10,
+            marginTop: 25,
           }}
           >
             Center for Railway Information Systems (CRIS)
@@ -290,7 +284,7 @@ const PassDiv = () => {
     </View>
      
       {/* Modal for FormWithLocalSave */}
-      <Modal visible={isVisible} animationType="slide" transparent={true} onRequestClose={toggleModal}>
+      <Modal visible={isVisible} animationType="fade" transparent={true} onRequestClose={toggleModal}>
         <View style={styles.modalOverlay}>
           <View style={styles.modalContainer}>
             <ScrollView contentContainerStyle={styles.scrollViewContainer}>
